@@ -57,7 +57,7 @@ int get_all_odd_combination(const vector<vector<odd> >& vvods, vector<odd>& vret
             //todo sort it
             sort(vret.begin(), vret.end(), [&](odd const& obj1, odd const& obj2)
             {
-                return ((obj1.value - obj2.value) > 0);
+                return ((obj1.value - obj2.value) < 0);
             });
             return 0;
         }
@@ -84,7 +84,7 @@ int get_all_odd_combination(const vector<vector<odd> >& vvods, vector<odd>& vret
 string getodd_by_readfile(const string& file, vector<odd>& vodd_ret)
 {
     ifstream infile;
-    infile.open(file.data());   //½«ÎÄ¼şÁ÷¶ÔÏóÓëÎÄ¼şÁ¬½ÓÆğÀ´
+    infile.open(file.data());   //å°†æ–‡ä»¶æµå¯¹è±¡ä¸æ–‡ä»¶è¿æ¥èµ·æ¥
     string stemp, str;
     vector<vector<odd>> vvodd;
 
@@ -94,12 +94,12 @@ string getodd_by_readfile(const string& file, vector<odd>& vodd_ret)
         Common::SplitString(stemp, "#", vstr);
 
         vector<odd> vodd1;
-        vodd1.emplace_back("Ê¤", Common::str2double(vstr[0]));
-        vodd1.emplace_back("Æ½", Common::str2double(vstr[1]));
-        vodd1.emplace_back("¸º", Common::str2double(vstr[2]));
+        vodd1.emplace_back("èƒœ", Common::str2double(vstr[0]));
+        vodd1.emplace_back("å¹³", Common::str2double(vstr[1]));
+        vodd1.emplace_back("è´Ÿ", Common::str2double(vstr[2]));
         vvodd.emplace_back(vodd1);
     }
-    infile.close();             //¹Ø±ÕÎÄ¼şÊäÈëÁ÷
+    infile.close();             //å…³é—­æ–‡ä»¶è¾“å…¥æµ
 
     get_all_odd_combination(vvodd, vodd_ret);
 
@@ -107,13 +107,13 @@ string getodd_by_readfile(const string& file, vector<odd>& vodd_ret)
 }
 
 
-// Í¨¹ıËæ»ú×¥È¡µÄ·½Ê½»ñÈ¡×Ê½ğÅâÂÊ·Ö²¼ ¿ÉÒÔÉèÖÃ×î´ó×¥È¡µÄ¸öÊı
+// é€šè¿‡éšæœºæŠ“å–çš„æ–¹å¼è·å–èµ„é‡‘èµ”ç‡åˆ†å¸ƒ å¯ä»¥è®¾ç½®æœ€å¤§æŠ“å–çš„ä¸ªæ•°
 void GetCfgMoney(int TOTAL, const int& OddSize, const vector<odd>& vodd_ret, int largezhushu_win,
         const vector<int>& vmust_hasthis, const vector<int>& vnotthis)
 {
     boost::mt19937 rng(time(0));
 
-    // ¼ì²éµÚÈı¸ö²ÎÊıÊÇ·ñºÏ¹æ
+    // æ£€æŸ¥ç¬¬ä¸‰ä¸ªå‚æ•°æ˜¯å¦åˆè§„
     if (vnotthis.size() >= OddSize)
     {
         LOG_INFO << "vnotthis  size input error";
@@ -142,7 +142,7 @@ void GetCfgMoney(int TOTAL, const int& OddSize, const vector<odd>& vodd_ret, int
         }
     }
 
-    //  ¿ªÊ¼Í³¼Æ·ÖÎö
+    //  å¼€å§‹ç»Ÿè®¡åˆ†æ
     while (true)
     {
         int SurPlus = TOTAL;
@@ -150,7 +150,7 @@ void GetCfgMoney(int TOTAL, const int& OddSize, const vector<odd>& vodd_ret, int
 
         for (int i = 1; i < OddSize; i++)
         {
-            //»ñÈ¡Ëæ»úÖµ 0µ½¶àÉÙ×¢Êı
+            //è·å–éšæœºå€¼ 0åˆ°å¤šå°‘æ³¨æ•°
             boost::uniform_int<> ui(0, SurPlus);
             int GetData = ui(rng);
 
@@ -162,7 +162,7 @@ void GetCfgMoney(int TOTAL, const int& OddSize, const vector<odd>& vodd_ret, int
         alloc_money.emplace_back(SurPlus);
 
 
-        // ´òÓ¡ĞÅÏ¢
+        // æ‰“å°ä¿¡æ¯
         std::string content("=====================================find one=========================\n");
         double total_money = 0.0;
         int large_total_0 = 0;
@@ -185,10 +185,10 @@ void GetCfgMoney(int TOTAL, const int& OddSize, const vector<odd>& vodd_ret, int
         }
         content += "=====================================end     =========================\n";
 
-        // ¹Û²ìÊÇ·ñÂú×ã¹ıÂËÌõ¼ş£¬ÈôÂú×ã
+        // è§‚å¯Ÿæ˜¯å¦æ»¡è¶³è¿‡æ»¤æ¡ä»¶ï¼Œè‹¥æ»¡è¶³
         if (vnotthis.size() == 0)
         {
-            // ¼ì²éÊÇ·ñ´æÔÚÓÚmusthasthis
+            // æ£€æŸ¥æ˜¯å¦å­˜åœ¨äºmusthasthis
             int must_has = 0;
             for (auto xx: vmust_hasthis)
             {
@@ -209,7 +209,7 @@ void GetCfgMoney(int TOTAL, const int& OddSize, const vector<odd>& vodd_ret, int
         else
         {
 
-            // ¼ì²éÊÇ·ñ´æÔÚÓÚnot_hasthis
+            // æ£€æŸ¥æ˜¯å¦å­˜åœ¨äºnot_hasthis
             int not_has_times = 0;
             for (auto xx: vnotthis)
             {
@@ -239,31 +239,31 @@ int main(int argc, char* argv[])
 
     if (argc == 1)
     {
-        std::cout << "1.´òÓ¡µ±Ç°ÅâÂÊ×éºÏ \n"
+        std::cout << "1.æ‰“å°å½“å‰èµ”ç‡ç»„åˆ \n"
                      "football_ana.exe  1   \n"
-                     "º¬Òå£º\n"
-                     "µÚÒ»¸ö²ÎÊı football_ana.exe Îª½ø³ÌÃû\n"
-                     "µÚ¶ş¸ö²ÎÊı1 ÎªÑ¡ÔñÀàĞÍ£¬´Ë´¦´òÓ¡µ±Ç°ËùÓĞÅâÂÊ£¬²¢°´ÕÕ´Ó´óµ½Ğ¡ÅÅÁĞ £¬indexÊı¾İ¿ÉÒÔ×÷ÎªºóÃæÉ¸Ñ¡µÄ²ÎÊı\n"
+                     "å«ä¹‰ï¼š\n"
+                     "ç¬¬ä¸€ä¸ªå‚æ•° football_ana.exe ä¸ºè¿›ç¨‹å\n"
+                     "ç¬¬äºŒä¸ªå‚æ•°1 ä¸ºé€‰æ‹©ç±»å‹ï¼Œæ­¤å¤„æ‰“å°å½“å‰æ‰€æœ‰èµ”ç‡ï¼Œå¹¶æŒ‰ç…§ä»å¤§åˆ°å°æ’åˆ— ï¼Œindexæ•°æ®å¯ä»¥ä½œä¸ºåé¢ç­›é€‰çš„å‚æ•°\n"
                      "\n"
-                     "2.»ñÈ¡Ï£Íû¶àÉÙÅâÂÊÓ¯Àû\n"
-                     "football_ana.exe  2    ÂòÈë×¢Êı     Ï£Íû¶àÉÙ¸ö×éºÏ¿ÉÓ¯Àû   °üº¬ÃüÁî1ÖĞµÄ×éºÏindex£¬ÓÃ#Á¬½Ó\n"
-                     "±ÈÈç£ºfootball_ana.exe 2 20 3 1#2\n"
-                     "º¬Òå£º\n"
-                     "µÚÒ»¸ö²ÎÊı football_ana.exe Îª½ø³ÌÃû\n"
-                     "µÚ¶ş¸ö²ÎÊı2 ÎªÑ¡ÔñÀàĞÍ\n"
-                     "µÚÈı¸ö²ÎÊı 20 ÎªÂòÈëµÄ×¢Êı\n"
-                     "µÚËÄ¸ö²ÎÊı 3 Ï£Íû¶àÉÙ¸ö×éºÏ¿ÉÓ¯Àû£¬±ÈÈç2´®1ÓĞ9ÖĞ×éºÏ£¬¿ÉÒÔĞ´2µ½5ÖÖ×éºÏ\n"
-                     "µÚÎå¸ö²ÎÊı 1#2 ÃüÁî1ÖĞÏÔÊ¾µÄindex£¬¾ÍÊÇindex 1ºÍ2¶ÔÓ¦ÅâÂÊÒ»¶¨Òª·¢Éú\n"
+                     "2.è·å–å¸Œæœ›å¤šå°‘èµ”ç‡ç›ˆåˆ©, ä¸”ç¬¬indexæ³¨å¿…é¡»ç›ˆåˆ©\n"
+                     "football_ana.exe  2    ä¹°å…¥æ³¨æ•°     å¸Œæœ›å¤šå°‘ä¸ªç»„åˆå¯ç›ˆåˆ©   åŒ…å«å‘½ä»¤1ä¸­çš„ç»„åˆindexï¼Œç”¨#è¿æ¥\n"
+                     "æ¯”å¦‚ï¼šfootball_ana.exe 2 20 3 1#2\n"
+                     "å«ä¹‰ï¼š\n"
+                     "ç¬¬ä¸€ä¸ªå‚æ•° football_ana.exe ä¸ºè¿›ç¨‹å\n"
+                     "ç¬¬äºŒä¸ªå‚æ•°2 ä¸ºé€‰æ‹©ç±»å‹\n"
+                     "ç¬¬ä¸‰ä¸ªå‚æ•° 20 ä¸ºä¹°å…¥çš„æ³¨æ•°\n"
+                     "ç¬¬å››ä¸ªå‚æ•° 3 å¸Œæœ›å¤šå°‘ä¸ªç»„åˆå¯ç›ˆåˆ©ï¼Œæ¯”å¦‚2ä¸²1æœ‰9ä¸­ç»„åˆï¼Œå¯ä»¥å†™2åˆ°5ç§ç»„åˆ\n"
+                     "ç¬¬äº”ä¸ªå‚æ•° 1#2 å‘½ä»¤1ä¸­æ˜¾ç¤ºçš„indexï¼Œå°±æ˜¯index 1å’Œ2å¯¹åº”èµ”ç‡ä¸€å®šè¦å‘ç”Ÿ\n"
                      "\n"
-                     "3.»ñÈ¡Ï£Íû¶àÉÙÅâÂÊÓ¯Àû£¬ÇÒµÚ¶àÉÙ×¢²»ÄÜÓ¯Àû\n"
-                     "football_ana.exe  3    ÂòÈë×¢Êı     Ï£Íû¶àÉÙ¸ö×éºÏ¿ÉÓ¯Àû   ²»°üº¬ÃüÁî1ÖĞµÄ×éºÏindex£¬ÓÃ#Á¬½Ó\n"
-                     "±ÈÈç£ºfootball_ana.exe 3 20 3 1#2\n"
-                     "º¬Òå£º\n"
-                     "µÚÒ»¸ö²ÎÊı football_ana.exe Îª½ø³ÌÃû\n"
-                     "µÚ¶ş¸ö²ÎÊı2 ÎªÑ¡ÔñÀàĞÍ\n"
-                     "µÚÈı¸ö²ÎÊı 20 ÎªÂòÈëµÄ×¢Êı\n"
-                     "µÚËÄ¸ö²ÎÊı 3 Ï£Íû¶àÉÙ¸ö×éºÏ¿ÉÓ¯Àû£¬±ÈÈç2´®1ÓĞ9ÖĞ×éºÏ£¬¿ÉÒÔĞ´2µ½5ÖÖ×éºÏ\n"
-                     "µÚÎå¸ö²ÎÊı 1#2 ÃüÁî1ÖĞÏÔÊ¾µÄindex£¬¾ÍÊÇindex 1ºÍ2¶ÔÓ¦ÅâÂÊ²»ÄÜ·¢Éú" << std::endl;
+                     "3.è·å–å¸Œæœ›å¤šå°‘èµ”ç‡ç›ˆåˆ©ï¼Œä¸”ç¬¬indexæ³¨ä¸èƒ½ç›ˆåˆ©\n"
+                     "football_ana.exe  3    ä¹°å…¥æ³¨æ•°     å¸Œæœ›å¤šå°‘ä¸ªç»„åˆå¯ç›ˆåˆ©   ä¸åŒ…å«å‘½ä»¤1ä¸­çš„ç»„åˆindexï¼Œç”¨#è¿æ¥\n"
+                     "æ¯”å¦‚ï¼šfootball_ana.exe 3 20 3 1#2\n"
+                     "å«ä¹‰ï¼š\n"
+                     "ç¬¬ä¸€ä¸ªå‚æ•° football_ana.exe ä¸ºè¿›ç¨‹å\n"
+                     "ç¬¬äºŒä¸ªå‚æ•°2 ä¸ºé€‰æ‹©ç±»å‹\n"
+                     "ç¬¬ä¸‰ä¸ªå‚æ•° 20 ä¸ºä¹°å…¥çš„æ³¨æ•°\n"
+                     "ç¬¬å››ä¸ªå‚æ•° 3 å¸Œæœ›å¤šå°‘ä¸ªç»„åˆå¯ç›ˆåˆ©ï¼Œæ¯”å¦‚2ä¸²1æœ‰9ä¸­ç»„åˆï¼Œå¯ä»¥å†™2åˆ°5ç§ç»„åˆ\n"
+                     "ç¬¬äº”ä¸ªå‚æ•° 1#2 å‘½ä»¤1ä¸­æ˜¾ç¤ºçš„indexï¼Œå°±æ˜¯index 1å’Œ2å¯¹åº”èµ”ç‡ä¸èƒ½å‘ç”Ÿ" << std::endl;
         exit(0);
     }
     namespace bf = boost::filesystem;
