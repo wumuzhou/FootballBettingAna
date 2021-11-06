@@ -23,4 +23,4 @@ football_ana.exe
 举个列子，站在合买的角度，如果自己只买20注，都去投资一场比赛，这20注该如何分配比例来提高自己中奖几率呢， 2串1有9种组合，我们最大的愿望就是20注分配到所有组合上并且最低的收益都能回本，这样中奖几率就是100%了(这种可能性是没有的),但是尽量提高组合中的中奖次数，这就是该工具的意义。结果看下图，总共买20注，按照下面比例购彩，其中有7种组合实现盈利。
 ![](others/3.png)
 # 二进制程序下载
-[下载地址](https://github.com/wumuzhou/FootballBettingAna/releases/tag/first)
+[下载地址](https://github.com/wumuzhou/FootballBettingAna/releases/tag/firstadd)
