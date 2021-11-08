@@ -19,7 +19,6 @@ message("boost inc:${Boost_INCLUDE_DIR}")
 
 set(lib_deps
         ${Boost_LIBRARIES}
-
         )
 
 add_executable(football_ana main.cpp)
